@@ -19,11 +19,6 @@
         -webkit-flex-flow: column;
                flex-flow: column;
     }
-    #main{
-        -webkit-box-flex: 1; 
-        -webkit-flex: 1;
-        flex: 1;
-    }
     
     </style>
 </head>
@@ -41,9 +36,7 @@
             <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(3)">BB</div>
             <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(4)">TG</div>
         </nav>
-        <div id="main">
-                
-        </div>
+        
     </div>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
@@ -52,7 +45,7 @@
         var header = $api.dom('header');
         nav = $api.dom('nav');
         $api.fixStatusBar(header);
-        $api.fixStatusBar(nav);
+        //$api.fixStatusBar(nav);
         var headerPos = $api.offset(header);
         var navPos = $api.offset(nav);
         menu = $api.domAll(nav, '.menu');
@@ -101,8 +94,7 @@
             vScrollBarEnabled: true,
             hScrollBarEnabled: true
         });*/
-         var citySelector = api.require('citySelector');
-citySelector.show();
+         
     }
     function fnRegister(){
         api.openWin({

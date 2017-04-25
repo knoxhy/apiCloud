@@ -7,32 +7,31 @@
     <title>Hello APP</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
 	<style>
-		#con{
-			margin: 10px;
-			font-size: 24px; 
-		}
-		ul{
-			margin-bottom: 10px;
-		}
-		ul li{ 
-			margin: 5px 10px;
-			padding: 5px;
-			color: #000;
-			word-wrap: break-word;
-		}
+		#wrap{
+        height: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+               flex-flow: column;
+    }
 	</style>
 </head>
 <body>
-    
+    <div id="wrap">
 	<header>
 		<h1>注册</h1>
 		<div class="btn left" tapmode onclick="api.closeWin();"><返回</div>
 	</header>
+	</div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
     apiready = function(){
-		
+		var header = $api.dom('header');
+        nav = $api.dom('nav');
+        $api.fixStatusBar(header);
 		
     };
 </script>
