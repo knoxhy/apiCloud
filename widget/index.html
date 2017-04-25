@@ -19,70 +19,112 @@
         -webkit-flex-flow: column;
                flex-flow: column;
     }
-    #header{
-        text-align: center; background-color: #81a9c3; color: #fff;
-        width: 100%;
-    }
-    #header h1{
-        font-size: 20px; height: 44px; line-height: 44px; margin: 0em; color: #fff;
-    }
     #main{
         -webkit-box-flex: 1; 
         -webkit-flex: 1;
         flex: 1;
     }
-    #footer{
-        height: 30px; line-height: 30px;
-        background-color: #81a9c3; 
-        width: 100%;
-        text-align: center;
-    }
-    #footer h5{
-        color: white;
-    }
-    .con{font-size: 28px; text-align: center;}
+    
     </style>
 </head>
 <body>
     <div id="wrap">
-        <div id="header">
-            <h1>APICloud</h1>
-        </div>
+        <header>
+            <h1>主页</h1>
+            <div class="btn left" tapmode onclick="fnOpenAddress()">V 北京</div>
+            <div class="btn right" tapmode onclick="fnRegister()">注册</div>
+        </header>
+        <nav>
+            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(0)">GV</div>
+            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(1)">AV</div>
+            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(2)">SM</div>
+            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(3)">BB</div>
+            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(4)">TG</div>
+        </nav>
         <div id="main">
                 
-        </div>
-        <div id="footer">
-            <h5>Copyright &copy;<span id="year"></span> </h5>
         </div>
     </div>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
     apiready = function(){
-		console.log("Hello APICloud");
-
-        var header = $api.byId('header');
-        //适配iOS 7+，Android 4.4+状态栏
-        $api.fixStatusBar(header);
-
+        var header = $api.dom('header');
+        nav = $api.dom('nav');
+        //$api.fixStatusBar(header);
+        //$api.fixStatusBar(nav);
         var headerPos = $api.offset(header);
-        var main = $api.byId('main');
-        var mainPos = $api.offset(main);
+        var navPos = $api.offset(nav);
+        menu = $api.domAll(nav, '.menu');
+        var frames = [];
+        for (var i = 0; i < menu.length; i++) {
+            frames.push({
+                name: 'frame'+i, 
+                url: 'html/frame1.html'
+            })
+        }
+        api.openFrameGroup ({
+            name: 'mainFrameGroup',
+            background: '#fff',
+            scrollEnabled: true,
+            rect: {
+                 x: 0, 
+                 y: headerPos.h+navPos.h, 
+                 w: 'auto', 
+                 h: 'auto'
+            },
+            index: 0,
+            frames: frames
+        }, function(ret, err){
+            if( ret ){
+                fnSetNavActive(ret.index)
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+    };
+    function fnOpenAddress(){
+        /*var header = $api.dom('header');
+        //$api.fixStatusBar(header);
+        var headerPos = $api.offset(header);
         api.openFrame({
-            name: 'main',
-            url: 'html/main.html',
-            bounces: true,
+            name: 'address',
+            url: './html/address.html',
             rect: {
                 x: 0,
                 y: headerPos.h,
                 w: 'auto',
-                h: mainPos.h
-            }
+                h: 'auto'
+            },
+            bounces: true,
+            bgColor: 'rgba(0,0,0,0.5)',
+            vScrollBarEnabled: true,
+            hScrollBarEnabled: true
+        });*/
+         var citySelector = api.require('citySelector');
+citySelector.show();
+    }
+    function fnRegister(){
+        api.openWin({
+            name: 'main',
+            url: './html/register.html'
         });
-
-        var year = $api.byId('year');
-        year.innerHTML = new Date().getFullYear();
-
-    };
+    }
+    function fnSetNavActive(index){
+        for (var i = 0; i < menu.length; i++) {
+            if (i===index) {
+                $api.addCls(menu[i], 'active');
+            }else{
+                $api.removeCls(menu[i],'active');
+            }
+        }
+    }
+    function fnSetNavActiveIndex(index){
+        api.setFrameGroupIndex({
+            name: 'mainFrameGroup',
+            index: index,
+            scroll: true
+        });
+    }
 </script>
 </html>
