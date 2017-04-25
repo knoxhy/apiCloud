@@ -51,8 +51,8 @@
     apiready = function(){
         var header = $api.dom('header');
         nav = $api.dom('nav');
-        //$api.fixStatusBar(header);
-        //$api.fixStatusBar(nav);
+        $api.fixStatusBar(header);
+        $api.fixStatusBar(nav);
         var headerPos = $api.offset(header);
         var navPos = $api.offset(nav);
         menu = $api.domAll(nav, '.menu');
