@@ -25,14 +25,14 @@
 <body>
     <div id="wrap">
         <header>
-            <h1>主页</h1>
-            <div class="btn left" tapmode onclick="fnOpenAddress()">V 北京</div>
-            <div class="btn right" tapmode onclick="fnRegister()">注册</div>
+            <h1>主页nezhaha</h1>
+            <div class="btn left" tapmode onclick="fnOpenAddress()"></div>
+            <div class="btn right" tapmode onclick="fnRegister()">放视频</div>
         </header>
         <nav>
-            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(0)">GV</div>
-            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(1)">AV</div>
-            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(2)">SM</div>
+            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(0)">VV</div>
+            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(1)">ASS</div>
+            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(2)">RTT</div>
             <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(3)">BB</div>
             <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(4)">TG</div>
         </nav>
@@ -45,10 +45,12 @@
         var header = $api.dom('header');
         nav = $api.dom('nav');
         $api.fixStatusBar(header);
+        
+
         //$api.fixStatusBar(nav);
         var headerPos = $api.offset(header);
         var navPos = $api.offset(nav);
-        menu = $api.domAll(nav, '.menu');
+       menu = $api.domAll(nav, '.menu');
         var frames = [];
         for (var i = 0; i < menu.length; i++) {
             frames.push({
