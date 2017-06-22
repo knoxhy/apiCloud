@@ -1,23 +1,80 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-    <title>title</title>
-    <link rel="stylesheet" type="text/css" href="api.css"/>
-    <style>
-        body{
-            
-        }
-    </style>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
 </head>
 <body>
-    
+   
 </body>
-<script type="text/javascript" src="api.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
     apiready = function(){
         
+        var playModule = api.require('playModule');
+        playModule.init({
+            isImmerse: true,
+            buffering: "加载中"
+        });
+        playModule.play({
+            pageType: "Frame",
+            rect: {
+                 x: 10,
+                y: 46,
+                w: api.winWidth - 20,
+                h: api.winWidth / 100 * 48
+            },
+            enableFull:false,
+            isBackBtn: true,
+            isFullBtn: true,
+            defaultBtn: true,
+            fixedOn:'video',
+            url: 'http://resource.apicloud.com/video/apicloud3.mp4',
+            //url:"http://wkz-1253297751.cosgz.myqcloud.com/video/1496291091766",
+            title: "电视剧",
+            isTopView: true,
+            isReplayView: true
+        }, function(ret, err) {
+            if (ret.status) {
+                 
+            }
+        });
+        playModule.addEventListener({
+                    name: 'unfull'
+                }, function(ret, err) {
+                    if (ret) {
+                        api.setScreenOrientation({
+                            orientation: 'portrait_up'
+                        })
+                        alert(JSON.stringify(ret));
+                    }else{
+                        alert(JSON.stringify(err));
+                    }
+                    
+                });
+                 playModule.addEventListener({
+                    name: 'full'
+                }, function(ret, err) {
+                    if (ret) {
+                        alert(JSON.stringify(ret));
+                    }else{
+                        alert(JSON.stringify(err));
+                    }
+                    
+                });
+       api.addEventListener({
+           name: 'keyback'
+       }, function(ret, err){
+           if( ret ){
+            api.closeWin();
+            api.setScreenOrientation({
+                orientation: 'portrait_up'
+            })
+           }
+       });
     };
 </script>
 </html>

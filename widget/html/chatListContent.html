@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" type="text/css" href="../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../css/aui.css" />
+		<style type="text/css">
+			.aui-badge{
+				top:0.3rem;
+				left:55%;
+			}
+			.aui-list .aui-list-item-media{
+				width: inherit;
+			}
+			.aui-list .aui-list-item-media img{
+				width: 2.5rem;
+			    height: 2.5rem;
+			    border-radius: 50%;
+			    display: block;
+			}
+			.aui-list .aui-list-item-text img {
+				width: 14px;
+				height: 14px;
+			}
+			.aui-list .aui-list-item-text {
+				-webkit-justify-content: flex-start;
+				justify-content: flex-start;
+			}
+			.aui-list .aui-list-item-right {
+				position: absolute;
+				right: 0;
+				top: 0
+			}
+			.aui-list .aui-list-item-title {
+				font-size: 0.9rem;
+				position: relative;
+				max-width: 100%;
+				color: #212121;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="aui-content aui-margin-b-15">
+			<ul class="aui-list aui-media-list" id="hh_list">
+				<!-- <li class="aui-list-item aui-list-item-middle" onclick="lt('','','')">
+					<div class="aui-media-list-item-inner">
+						<div class="aui-list-item-media wechat-avatar">
+							<div class="aui-badge">3</div>
+							<img src="http://i.koiclub.net/b2b-tests/2017/05/26/20170526141111-224.jpg@!200" /></div>
+								<div class="aui-list-item-inner">
+								<div class="aui-list-item-text">
+								<div class="aui-list-item-title">cmmm</div><div class="aui-list-item-right">2017年6月21日14:36:43</div></div>
+								<div class="aui-list-item-text aui-font-size-12">
+								<div class="aui-text-warning">[图像消息]</div>
+							</div>
+						</div>
+					</div>
+				</li> -->
+				
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js" ></script>
+	<script type="text/javascript" src="../script/base.js" ></script>
+	<script type="text/javascript">
+		apiready = function() {
+			var rong = api.require('rongCloud2');
+			rong.getConversationList(function(ret, err) {
+				if (ret.status == 'success') {
+					var html = '';
+					for (var i in ret.result) {
+						var rs = ret.result[i];
+						var nType = rs.type;
+						var extra = JSON.parse(rs.latestMessage.extra);
+						
+						if (extra.targetId==$api.getStorage('id')) {
+							var targetNickName = extra.nickName;
+							var targetAvatar = extra.avatar;
+						}else{
+							var targetNickName = extra.targetNickName;
+							var targetAvatar = extra.targetAvatar;
+						}
+						
+
+						if (rs.unreadMessageCount > 0 ) {
+							var shu = '<div class="aui-badge">' + rs.unreadMessageCount + '</div>';
+						} else {
+							var shu = '';
+						}
+						if (rs.latestMessage.text) {
+							xx = rs.latestMessage.text.replace(reg, function(a, b) {
+								return face[a] ? face[a] : a;
+							});
+							var types = '<div class="aui-list-item-text aui-font-size-12">' + xx + '</div>'
+						} else {
+							var types = '<div class="aui-list-item-text aui-font-size-12"><div class="aui-text-warning">[图像消息]</div></div>'
+						}
+						html += '<li class="aui-list-item aui-list-item-middle" onclick="lt(' +rs.targetId + ',' + "'" + targetNickName + "'" + ',' + "'" + targetAvatar + "'" + ')">';
+						html += '     <div class="aui-media-list-item-inner">';
+						html += '	       <div class="aui-list-item-media wechat-avatar">';
+						html += shu;
+						html += '		        <img src="' + targetAvatar + '" /></div>';
+						html += '			<div class="aui-list-item-inner">';
+						html += '                <div class="aui-list-item-text">';
+						html += '                     <div class="aui-list-item-title">' + targetNickName + '</div><div class="aui-list-item-right">' + sj(rs.receivedTime) + '</div></div>';
+						html += types;
+						html += '           </div>';
+						html += '     </div>';
+						html += '</li>';
+					}
+					$api.html($api.dom('#hh_list'), html);
+				}
+			})
+			
+			api.addEventListener({
+				name : 'senthh'
+			}, function(ret, err) {
+				hh_list();
+			});
+		}
+		function hh_list() {
+			var rong = api.require('rongCloud2');
+			rong.getConversationList(function(ret, err) {
+				if (ret.status == 'success') {
+					var html = '';
+					for (var i in ret.result) {
+						var rs = ret.result[i];
+						var nType = rs.type;
+						var extra = JSON.parse(rs.latestMessage.extra);
+						
+						if (extra.targetId==$api.getStorage('id')) {
+							var targetNickName = extra.nickName;
+							var targetAvatar = extra.avatar;
+						}else{
+							var targetNickName = extra.targetNickName;
+							var targetAvatar = extra.targetAvatar;
+						}
+						
+						if (rs.unreadMessageCount > 0 ) {
+							var shu = '<div class="aui-badge">' + rs.unreadMessageCount + '</div>';
+						} else {
+							var shu = '';
+						}
+						if (rs.latestMessage.text) {
+							xx = rs.latestMessage.text.replace(reg, function(a, b) {
+								return face[a] ? face[a] : a;
+							});
+							var types = '<div class="aui-list-item-text aui-font-size-12">' + xx + '</div>'
+						} else {
+							var types = '<div class="aui-list-item-text aui-font-size-12"><div class="aui-text-warning">[图像消息]</div></div>'
+						}
+						html += '<li class="aui-list-item aui-list-item-middle" onclick="lt(' + rs.targetId + ',' + "'" + targetNickName + "'" + ',' + "'" + targetAvatar + "'" + ')">';
+						html += '     <div class="aui-media-list-item-inner">';
+						html += '	       <div class="aui-list-item-media wechat-avatar">';
+						html += shu;
+						html += '		        <img src="' + targetAvatar + '" /></div>';
+						html += '			<div class="aui-list-item-inner">';
+						html += '                <div class="aui-list-item-text">';
+						html += '                     <div class="aui-list-item-title">' + targetNickName + '</div><div class="aui-list-item-right">' + sj(rs.receivedTime) + '</div></div>';
+						html += types;
+						html += '           </div>';
+						html += '     </div>';
+						html += '</li>';
+					}
+					$api.html($api.dom('#hh_list'), html);
+				}
+			})
+		}
+
+		function lt(id, nickName, avatar) {
+			//标为已读
+			var rong = api.require('rongCloud2');
+			rong.clearMessagesUnreadStatus({
+				conversationType : 'PRIVATE',
+				targetId : id
+			}, function(ret, err) {
+				if (ret) {
+					api.sendEvent({
+                        name : 'senthh'
+                    });
+				}
+			})
+			api.openWin({
+				reload : true,
+				name : 'chat',
+				url : 'chat.html',
+				pageParam : {
+					targetId : id,
+					targetNickName : nickName,
+					targetAvatar : avatar
+				},
+				vScrollBarEnabled : false,
+			});
+		}
+	</script>
+</html>

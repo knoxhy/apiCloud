@@ -1,124 +1,39 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="./css/api.css" />
-    <style type="text/css">
-    html,body{
-        height: 100%;
-    }
-    #wrap{
-        height: 100%;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-flex-flow: column;
-               flex-flow: column;
-    }
-    
-    </style>
-</head>
-<body>
-    <div id="wrap">
-        <header>
-            <h1>主页nezhaha</h1>
-            <div class="btn left" tapmode onclick="fnOpenAddress()"></div>
-            <div class="btn right" tapmode onclick="fnRegister()">放视频</div>
-        </header>
-        <nav>
-            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(0)">VV</div>
-            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(1)">ASS</div>
-            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(2)">RTT</div>
-            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(3)">BB</div>
-            <div class="menu" tapmode='active' onclick="fnSetNavActiveIndex(4)">TG</div>
-        </nav>
-        
-    </div>
-</body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
-    apiready = function(){
-        var header = $api.dom('header');
-        nav = $api.dom('nav');
-        $api.fixStatusBar(header);
-        
-
-        //$api.fixStatusBar(nav);
-        var headerPos = $api.offset(header);
-        var navPos = $api.offset(nav);
-       menu = $api.domAll(nav, '.menu');
-        var frames = [];
-        for (var i = 0; i < menu.length; i++) {
-            frames.push({
-                name: 'frame'+i, 
-                url: 'html/frame1.html'
-            })
+    apiready = function() {
+        api.setStatusBarStyle({
+            style : 'light',
+            color : '#000'
+        });
+        var userId = $api.getStorage('userId')
+        if (userId) {
+            api.openFrame({
+                name: 'homePage',
+                url: 'html/homePage.html',
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: api.winHeight
+                },
+                pageParam: {
+                    name: 'homePage'
+                }
+            });
+        } else {
+            api.openFrame({
+                name: 'login',
+                url: 'html/login.html',
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: api.winHeight
+                },
+                pageParam: {
+                    name: 'login'
+                }
+            });
         }
-        api.openFrameGroup ({
-            name: 'mainFrameGroup',
-            background: '#fff',
-            scrollEnabled: true,
-            rect: {
-                 x: 0, 
-                 y: headerPos.h+navPos.h, 
-                 w: 'auto', 
-                 h: 'auto'
-            },
-            index: 0,
-            frames: frames
-        }, function(ret, err){
-            if( ret ){
-                fnSetNavActive(ret.index)
-            }else{
-                 alert( JSON.stringify( err ) );
-            }
-        });
-    };
-    function fnOpenAddress(){
-        /*var header = $api.dom('header');
-        //$api.fixStatusBar(header);
-        var headerPos = $api.offset(header);
-        api.openFrame({
-            name: 'address',
-            url: './html/address.html',
-            rect: {
-                x: 0,
-                y: headerPos.h,
-                w: 'auto',
-                h: 'auto'
-            },
-            bounces: true,
-            bgColor: 'rgba(0,0,0,0.5)',
-            vScrollBarEnabled: true,
-            hScrollBarEnabled: true
-        });*/
-         
-    }
-    function fnRegister(){
-        api.openWin({
-            name: 'main',
-            url: './html/register.html'
-        });
-    }
-    function fnSetNavActive(index){
-        for (var i = 0; i < menu.length; i++) {
-            if (i===index) {
-                $api.addCls(menu[i], 'active');
-            }else{
-                $api.removeCls(menu[i],'active');
-            }
-        }
-    }
-    function fnSetNavActiveIndex(index){
-        api.setFrameGroupIndex({
-            name: 'mainFrameGroup',
-            index: index,
-            scroll: true
-        });
     }
 </script>
-</html>

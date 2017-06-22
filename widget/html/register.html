@@ -32,25 +32,24 @@
 		var header = $api.dom('header');
         nav = $api.dom('nav');
         $api.fixStatusBar(header);
-        var playModule = api.require('playModule');
-        playModule.play({
-            pageType: "Frame",
+        api.openFrame({
+            name: 'video',
+            url: './page.html',
             rect: {
-                 x: 10,
-                y: 46,
-                w: api.winWidth - 20,
-                h: api.winWidth / 100 * 48
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
             },
-            isBackBtn: true,
-            isFullBtn: true,
-            defaultBtn: true,
-            fixed: false,
-            url: 'http://resource.apicloud.com/video/apicloud3.mp4',
-            //url:"http://wkz-1253297751.cosgz.myqcloud.com/video/1496291091766",
-            title: "电视剧",
-            isTopView: true,
-            isReplayView: true
-        }, function(ret, err) {});
+            pageParam: {
+                name: 'test'
+            },
+            bounces: true,
+            bgColor: 'rgba(0,0,0,0.1)',
+            vScrollBarEnabled: true,
+            hScrollBarEnabled: true
+        });
+        
     };
 </script>
 </html>
